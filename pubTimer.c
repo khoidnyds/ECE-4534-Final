@@ -25,7 +25,7 @@ void init_pubTimer(){
     Timer_Params params;
     Timer_init();
     Timer_Params_init(&params);
-    params.period = 5;
+    params.period = 10;
     params.periodUnits = Timer_PERIOD_HZ;
     params.timerMode = Timer_CONTINUOUS_CALLBACK;
     params.timerCallback = pubTimerCallback;
@@ -68,7 +68,6 @@ void pubTimerCallback(Timer_Handle myHandle, int_fast16_t status){
 void initTimerUS()
 {
     Timer_Params params;
-    Timer_Handle timerUS;
 
     Timer_init();
     Timer_Params_init(&params);

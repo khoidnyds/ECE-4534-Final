@@ -41,6 +41,14 @@ typedef struct {
     int triggerUS;
 } msgTriggerUS;
 
+typedef enum { ultrasonic, color, limitSwitch } msgType;
+
+typedef enum { front, left, right, back } posUS;
+typedef struct {
+    msgType type;
+    posUS position;
+    unsigned int distance;
+} msgUS;
 
 int init_queue();
 
@@ -59,5 +67,7 @@ int receiveFromGenQueue(unpackedMsg*);
 
 int sendMsgToQueueTriggerUS(msgTriggerUS* outMsg);
 int receiveMsgFromQueueTriggerUS(msgTriggerUS* inMsg);
+int sendMsgToQueueUS(msgUS* outMsg);
+int receiveMsgFromQueueUS(msgUS* inMsg);
 
 #endif

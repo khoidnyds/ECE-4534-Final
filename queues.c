@@ -4,15 +4,17 @@ QueueHandle_t xQueue_mqtt  = NULL;
 QueueHandle_t xQueue_stats = NULL;
 QueueHandle_t xQueue_gen   = NULL;
 QueueHandle_t xQueueTriggerUS = NULL;
+QueueHandle_t xQueueUS = NULL;
 
 int init_queue(){
     xQueue_mqtt = xQueueCreate(QUEUESIZE, sizeof(mqttMsg));
     xQueue_stats = xQueueCreate(QUEUESIZE, sizeof(unpackedMsg));
     xQueue_gen = xQueueCreate(QUEUESIZE, sizeof(unpackedMsg));
     xQueueTriggerUS = xQueueCreate(QUEUESIZE, sizeof(msgTriggerUS));
+    xQueueUS = xQueueCreate(QUEUESIZE, sizeof(msgUS));
 
     if (xQueue_mqtt==NULL || xQueue_stats==NULL || xQueue_gen==NULL ||
-        xQueueTriggerUS==NULL)
+        xQueueTriggerUS==NULL || xQueueUS==NULL)
         return -1;
     dbgOutputLoc(DLOC_Q_INIT_SUCC);
     return 0;
@@ -118,5 +120,26 @@ int receiveMsgFromQueueTriggerUS(msgTriggerUS* inMsg){
         return -1;
     }
     //dbgOutputLoc(DLOC_MESSAGE_SWITCH_RECEIVE_SUCCESS);
+    return 0;
+}
+
+int sendMsgToQueueUS(msgUS* outMsg){
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    BaseType_t result = xQueueSendToBackFromISR(xQueueUS, outMsg, &xHigherPriorityTaskWoken);
+    if (result != pdTRUE){
+        //dbgOutputLoc(DLOC_MESSAGE_US_SEND_FAIL);
+        return -1;
+    }
+    //dbgOutputLoc(DLOC_MESSAGE_US_SEND_SUCCESS);
+    return 0;
+}
+
+int receiveMsgFromQueueUS(msgUS* inMsg){
+    BaseType_t result = xQueueReceive(xQueueUS, inMsg, portMAX_DELAY);
+    if (result != pdPASS){
+        //dbgOutputLoc(DLOC_MESSAGE_US_RECEIVE_FAIL);
+        return -1;
+    }
+    //dbgOutputLoc(DLOC_MESSAGE_US_RECEIVE_SUCCESS);
     return 0;
 }

@@ -45,8 +45,10 @@ void mainThread(void * args){
     if(mqttClientHandle < 0)
         errorHalt("Error connecting");
 
+    initTimerUS();
     init_pubTimer();
     init_statsTimer();
+
     mqttMsg recMsg;
     unpackedMsg unpMsg;
 

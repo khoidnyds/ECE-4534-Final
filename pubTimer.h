@@ -12,7 +12,7 @@
 #include "queues.h"
 #include "mqtt_client_app.h"
 
-
+Timer_Handle timerUS;
 void init_statsTimer();
 void init_pubTimer();
 

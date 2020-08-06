@@ -56,8 +56,7 @@
 extern void * mainThread(void *arg0);
 
 /* Stack size in bytes */
-#define THREADSTACKSIZE   8192
-
+#define THREADSTACKSIZE   4096
 
 #define GEN_TASK_PRIORITY 2
 #define GEN_TASK_STACK_SIZE (2*1024)

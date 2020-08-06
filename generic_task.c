@@ -16,14 +16,21 @@ void* genTask(void* args){
             LOG_INFO("TOPIC: %s \tPAYLOAD: %s\r\n", outMsg.topic, outMsg.payload);
         }
         else{
-
             dbgOutputLoc(DLOC_GT_MAKEMSG_START);
             outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
             dbgOutputLoc(DLOC_GT_MAKEMSG_TS);
             outMsg.sequenceNum=seqNum;
             dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
             seqNum++;
-            strcpy(outMsg.payload, PUB_MESSAGE);
+
+
+            msgUS newMsg;
+            receiveMsgFromQueueUS(&newMsg);
+            char buffer[sizeof(unsigned int)];
+            sprintf(buffer, "%d", newMsg.distance);
+            strcpy(outMsg.payload, buffer);
+
+
             dbgOutputLoc(DLOC_GT_MAKEMSG_PAYLOAD);
             outMsg.statsCmd = PUBLISHED;
             strcpy(outMsg.topic, PUB_TOPIC_0);
