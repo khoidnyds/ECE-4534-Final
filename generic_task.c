@@ -3,7 +3,10 @@
 void* genTask(void* args){
 
     dbgOutputLoc(DLOC_GT_START);
-    int seqNum = 0;
+    int seqNum_us1 = 0;
+    int seqNum_us2 = 0;
+    int seqNum_us3 = 0;
+    int seqNum_us4 = 0;
     unpackedMsg outMsg;
     mqttMsg sendMsg;
     sendMsg.event = APP_MQTT_PUBLISH;
@@ -19,9 +22,7 @@ void* genTask(void* args){
             dbgOutputLoc(DLOC_GT_MAKEMSG_START);
             outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
             dbgOutputLoc(DLOC_GT_MAKEMSG_TS);
-            outMsg.sequenceNum=seqNum;
-            dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
-            seqNum++;
+
 
 
             msgUS newMsg;
@@ -30,11 +31,43 @@ void* genTask(void* args){
             sprintf(buffer, "%d", newMsg.distance);
             strcpy(outMsg.payload, buffer);
 
+            switch(newMsg.position){
+            case left:
+                outMsg.sequenceNum=seqNum_us1;
+                dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
+                seqNum_us1++;
+                strcpy(outMsg.topic, PUB_TOPIC_0);
+                dbgOutputLoc(DLOC_GT_MAKEMSG_TOPIC);
+                break;
+            case front:
+                outMsg.sequenceNum=seqNum_us2;
+                dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
+                seqNum_us2++;
+                strcpy(outMsg.topic, PUB_TOPIC_1);
+                dbgOutputLoc(DLOC_GT_MAKEMSG_TOPIC);
+                break;
+            case right:
+                outMsg.sequenceNum=seqNum_us3;
+                dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
+                seqNum_us3++;
+                strcpy(outMsg.topic, PUB_TOPIC_2);
+                dbgOutputLoc(DLOC_GT_MAKEMSG_TOPIC);
+                break;
+            case back:
+                outMsg.sequenceNum=seqNum_us4;
+                dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
+                seqNum_us4++;
+                strcpy(outMsg.topic, PUB_TOPIC_3);
+                dbgOutputLoc(DLOC_GT_MAKEMSG_TOPIC);
+                break;
+            default:
+                break;
+            }
+
 
             dbgOutputLoc(DLOC_GT_MAKEMSG_PAYLOAD);
             outMsg.statsCmd = PUBLISHED;
-            strcpy(outMsg.topic, PUB_TOPIC_0);
-            dbgOutputLoc(DLOC_GT_MAKEMSG_TOPIC);
+
             outMsg.msgType = GENERAL;
             strcpy(sendMsg.payload, "[");
             json_pack(&outMsg, sendMsg.payload);
