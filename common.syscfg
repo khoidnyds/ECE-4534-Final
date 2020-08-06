@@ -15,7 +15,7 @@ const Board          = scripting.addModule("/ti/drivers/Board");
 const Crypto         = scripting.addModule("/ti/drivers/Crypto");
 const Crypto1        = Crypto.addInstance();
 const DMA            = scripting.addModule("/ti/drivers/DMA");
-const GPIO           = scripting.addModule("/ti/drivers/GPIO");
+const GPIO           = scripting.addModule("/ti/drivers/GPIO", {}, false);
 const GPIO1          = GPIO.addInstance();
 const GPIO2          = GPIO.addInstance();
 const GPIO3          = GPIO.addInstance();
@@ -25,10 +25,8 @@ const GPIO6          = GPIO.addInstance();
 const GPIO7          = GPIO.addInstance();
 const GPIO8          = GPIO.addInstance();
 const GPIO9          = GPIO.addInstance();
-const GPIO10         = GPIO.addInstance();
-const GPIO11         = GPIO.addInstance();
-const GPIO12         = GPIO.addInstance();
-const GPIO13         = GPIO.addInstance();
+const I2C            = scripting.addModule("/ti/drivers/I2C", {}, false);
+const I2C1           = I2C.addInstance();
 const Power          = scripting.addModule("/ti/drivers/Power");
 const SPI            = scripting.addModule("/ti/drivers/SPI");
 const SPI1           = SPI.addInstance();
@@ -36,6 +34,7 @@ const Timer          = scripting.addModule("/ti/drivers/Timer");
 const Timer1         = Timer.addInstance();
 const Timer2         = Timer.addInstance();
 const Timer3         = Timer.addInstance();
+const Timer4         = Timer.addInstance();
 const Watchdog       = scripting.addModule("/ti/drivers/Watchdog");
 const Watchdog1      = Watchdog.addInstance();
 const SimpleLinkWifi = scripting.addModule("/ti/drivers/net/wifi/SimpleLinkWifi");
@@ -58,52 +57,53 @@ Display1.uart.uart.rxDmaChannel.$assign = "UDMA_CH8";
 
 Crypto1.$name = "CONFIG_Crypto_0";
 
-GPIO1.$hardware       = system.deviceData.board.components.SW2;
-GPIO1.$name           = "CONFIG_GPIO_BUTTON_0";
-GPIO1.gpioPin.$assign = "boosterpack.3";
+GPIO1.$name           = "US1_TRIGGER";
+GPIO1.mode            = "Output";
+GPIO1.pull            = "Pull Down";
+GPIO1.gpioPin.$assign = "boosterpack.24";
 
-GPIO2.$hardware       = system.deviceData.board.components.SW3;
-GPIO2.$name           = "CONFIG_GPIO_BUTTON_1";
-GPIO2.gpioPin.$assign = "boosterpack.11";
+GPIO2.$name           = "US2_TRIGGER";
+GPIO2.mode            = "Output";
+GPIO2.pull            = "Pull Down";
+GPIO2.gpioPin.$assign = "boosterpack.13";
 
-GPIO3.$hardware      = system.deviceData.board.components.LED_RED;
-GPIO3.outputStrength = "High";
-GPIO3.$name          = "CONFIG_GPIO_LED_0";
+GPIO3.$name           = "US3_TRIGGER";
+GPIO3.mode            = "Output";
+GPIO3.pull            = "Pull Down";
+GPIO3.gpioPin.$assign = "boosterpack.18";
 
-GPIO4.$hardware      = system.deviceData.board.components.LED_YELLOW;
-GPIO4.outputStrength = "High";
-GPIO4.$name          = "CONFIG_GPIO_LED_1";
+GPIO4.$name           = "US4_TRIGGER";
+GPIO4.mode            = "Output";
+GPIO4.pull            = "Pull Down";
+GPIO4.gpioPin.$assign = "boosterpack.19";
 
-GPIO5.$hardware      = system.deviceData.board.components.LED_GREEN;
-GPIO5.outputStrength = "High";
-GPIO5.$name          = "CONFIG_GPIO_LED_2";
+GPIO5.$name            = "US1_ECHO";
+GPIO5.pull             = "Pull Down";
+GPIO5.interruptTrigger = "Both Edges";
+GPIO5.gpioPin.$assign  = "boosterpack.4";
 
-GPIO6.$name           = "CONFIG_GPIO_0";
-GPIO6.mode            = "Dynamic";
-GPIO6.gpioPin.$assign = "boosterpack.19";
+GPIO6.$name            = "US2_ECHO";
+GPIO6.pull             = "Pull Down";
+GPIO6.interruptTrigger = "Both Edges";
+GPIO6.gpioPin.$assign  = "boosterpack.5";
 
-GPIO7.$name           = "CONFIG_GPIO_1";
-GPIO7.mode            = "Dynamic";
-GPIO7.gpioPin.$assign = "boosterpack.2";
+GPIO7.$name            = "US3_ECHO";
+GPIO7.pull             = "Pull Down";
+GPIO7.interruptTrigger = "Both Edges";
+GPIO7.gpioPin.$assign  = "boosterpack.8";
 
-GPIO8.$name           = "CONFIG_GPIO_2";
-GPIO8.mode            = "Dynamic";
-GPIO8.gpioPin.$assign = "boosterpack.4";
+GPIO8.$name            = "US4_ECHO";
+GPIO8.pull             = "Pull Down";
+GPIO8.interruptTrigger = "Both Edges";
+GPIO8.gpioPin.$assign  = "boosterpack.26";
 
-GPIO9.$name = "CONFIG_GPIO_3";
-GPIO9.mode  = "Output";
+GPIO9.$name = "LIMIT_SWITCH";
 
-GPIO10.$name = "CONFIG_GPIO_4";
-GPIO10.mode  = "Output";
-
-GPIO11.$name = "CONFIG_GPIO_5";
-GPIO11.mode  = "Output";
-
-GPIO12.$name = "CONFIG_GPIO_6";
-GPIO12.mode  = "Output";
-
-GPIO13.$name = "CONFIG_GPIO_7";
-GPIO13.mode  = "Output";
+I2C1.$name              = "CONFIG_I2C_0";
+I2C1.i2c.$name          = "MyI2C1";
+I2C1.i2c.$assign        = "I2C0";
+I2C1.i2c.sdaPin.$assign = "boosterpack.14";
+I2C1.i2c.sclPin.$assign = "boosterpack.7";
 
 Power.ioRetentionShutdown = ["GRP_1"];
 Power.parkPins.$name      = "ti_drivers_power_PowerCC32XXPins0";
@@ -113,10 +113,6 @@ SPI1.mode                     = "Four Pin SS Active Low";
 SPI1.defaultTxBufferValue     = "0";
 SPI1.spi.$name                = "MySPI1";
 SPI1.spi.$assign              = "SPI0";
-SPI1.spi.sclkPin.$assign      = "boosterpack.7";
-SPI1.spi.misoPin.$assign      = "boosterpack.14";
-SPI1.spi.mosiPin.$assign      = "boosterpack.15";
-SPI1.spi.ssPin.$assign        = "boosterpack.18";
 SPI1.spi.dmaRxChannel.$assign = "UDMA_CH6";
 SPI1.spi.dmaTxChannel.$assign = "UDMA_CH7";
 
@@ -134,6 +130,11 @@ Timer3.$name         = "CONFIG_TIMER_2";
 Timer3.timer.$name   = "MyTimer1";
 Timer3.timer.$assign = "Timer2";
 
+Timer4.$name         = "CONFIG_TIMER_3";
+Timer4.timerType     = "32 Bits";
+Timer4.timer.$name   = "MyTimer1";
+Timer4.timer.$assign = "Timer3";
+
 Watchdog1.$name            = "CONFIG_WATCHDOG_0";
 Watchdog1.watchdog.$name   = "MyWATCHDOG1";
 Watchdog1.watchdog.$assign = "WATCHDOG0";
@@ -146,11 +147,8 @@ SlNet1.ifName = "CC32xx";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO3.gpioPin.$suggestSolution  = "64";
-GPIO4.gpioPin.$suggestSolution  = "1";
-GPIO5.gpioPin.$suggestSolution  = "2";
-GPIO9.gpioPin.$suggestSolution  = "21";
-GPIO10.gpioPin.$suggestSolution = "45";
-GPIO11.gpioPin.$suggestSolution = "50";
-GPIO12.gpioPin.$suggestSolution = "53";
-GPIO13.gpioPin.$suggestSolution = "59";
+GPIO9.gpioPin.$suggestSolution    = "58";
+SPI1.spi.sclkPin.$suggestSolution = "45";
+SPI1.spi.misoPin.$suggestSolution = "53";
+SPI1.spi.mosiPin.$suggestSolution = "7";
+SPI1.spi.ssPin.$suggestSolution   = "50";

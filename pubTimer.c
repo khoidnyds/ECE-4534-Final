@@ -77,7 +77,7 @@ void initTimerUS()
     params.timerMode = Timer_CONTINUOUS_CALLBACK;
     params.timerCallback = timerCallback;
 
-    timerUS = Timer_open(CONFIG_TIMER_0, &params);
+    timerUS = Timer_open(CONFIG_TIMER_3, &params);
 
     if (timerUS == NULL) {
         while(1);

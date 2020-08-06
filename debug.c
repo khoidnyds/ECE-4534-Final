@@ -36,23 +36,23 @@ void intToString(int inInt, char* outStr){
 void init_gpio(){
     GPIO_init();
 
-    GPIO_setConfig(CONFIG_GPIO_0, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_1, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_2, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_3, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_4, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_5, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_6, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-    GPIO_setConfig(CONFIG_GPIO_7, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
-
-    GPIO_write(CONFIG_GPIO_0, 0);
-    GPIO_write(CONFIG_GPIO_1, 0);
-    GPIO_write(CONFIG_GPIO_2, 0);
-    GPIO_write(CONFIG_GPIO_3, 0);
-    GPIO_write(CONFIG_GPIO_4, 0);
-    GPIO_write(CONFIG_GPIO_5, 0);
-    GPIO_write(CONFIG_GPIO_6, 0);
-    GPIO_write(CONFIG_GPIO_7, 0);
+//    GPIO_setConfig(CONFIG_GPIO_0, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_1, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_2, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_3, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_4, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_5, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_6, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//    GPIO_setConfig(CONFIG_GPIO_7, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+//
+//    GPIO_write(CONFIG_GPIO_0, 0);
+//    GPIO_write(CONFIG_GPIO_1, 0);
+//    GPIO_write(CONFIG_GPIO_2, 0);
+//    GPIO_write(CONFIG_GPIO_3, 0);
+//    GPIO_write(CONFIG_GPIO_4, 0);
+//    GPIO_write(CONFIG_GPIO_5, 0);
+//    GPIO_write(CONFIG_GPIO_6, 0);
+//    GPIO_write(CONFIG_GPIO_7, 0);
 
 }
 
@@ -61,15 +61,15 @@ void dbgOutputLoc(unsigned int outLoc){
         errorHalt("\n\rbad debug location");
     else
     {
-        GPIO_write(CONFIG_GPIO_7, 1);
-        GPIO_write(CONFIG_GPIO_0, (outLoc & 0x1));
-        GPIO_write(CONFIG_GPIO_1, ((outLoc>>1) & 0x1));
-        GPIO_write(CONFIG_GPIO_2, ((outLoc>>2) & 0x1));
-        GPIO_write(CONFIG_GPIO_3, ((outLoc>>3) & 0x1));
-        GPIO_write(CONFIG_GPIO_4, ((outLoc>>4) & 0x1));
-        GPIO_write(CONFIG_GPIO_5, ((outLoc>>5) & 0x1));
-        GPIO_write(CONFIG_GPIO_6, ((outLoc>>6) & 0x1));
-        GPIO_write(CONFIG_GPIO_7, 0);
+//        GPIO_write(CONFIG_GPIO_7, 1);
+//        GPIO_write(CONFIG_GPIO_0, (outLoc & 0x1));
+//        GPIO_write(CONFIG_GPIO_1, ((outLoc>>1) & 0x1));
+//        GPIO_write(CONFIG_GPIO_2, ((outLoc>>2) & 0x1));
+//        GPIO_write(CONFIG_GPIO_3, ((outLoc>>3) & 0x1));
+//        GPIO_write(CONFIG_GPIO_4, ((outLoc>>4) & 0x1));
+//        GPIO_write(CONFIG_GPIO_5, ((outLoc>>5) & 0x1));
+//        GPIO_write(CONFIG_GPIO_6, ((outLoc>>6) & 0x1));
+//        GPIO_write(CONFIG_GPIO_7, 0);
     }
 }
 
