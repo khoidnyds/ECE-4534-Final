@@ -51,11 +51,12 @@
 #include "generic_task.h"
 #include "stats.h"
 #include "debug_if.h"
+#include "us_task.h"
 
 extern void * mainThread(void *arg0);
 
 /* Stack size in bytes */
-#define THREADSTACKSIZE   4096
+#define THREADSTACKSIZE   8192
 
 
 #define GEN_TASK_PRIORITY 2
@@ -63,6 +64,9 @@ extern void * mainThread(void *arg0);
 
 #define STATS_TASK_PRIORITY 2
 #define STATS_TASK_STACK_SIZE (2*1024)
+
+#define US_TASK_PRIORITY 2
+#define US_TASK_STACK_SIZE 4096
 /*
  *  ======== main ========
  */
@@ -120,7 +124,19 @@ int main(void)
     if(pthread_create(&stats_thread, &stats_pAttrs, statsTask, NULL))
         errorHalt("Unable to create thread");
 
+    pthread_t us_thread;
+    pthread_attr_t us_pAttrs;
+    struct sched_param us_priParam;
 
+    pthread_attr_init(&us_pAttrs);
+    us_priParam.sched_priority = US_TASK_PRIORITY;
+    if(pthread_attr_setdetachstate(&us_pAttrs, PTHREAD_CREATE_DETACHED))
+        errorHalt(" pthread_attr_setdetachstate() failed");
+    pthread_attr_setschedparam(&us_pAttrs, &us_priParam);
+    if(pthread_attr_setstacksize(&us_pAttrs, US_TASK_STACK_SIZE))
+        errorHalt("Unable to set stack size");
+    if(pthread_create(&us_thread, &us_pAttrs, usTask, NULL))
+        errorHalt("Unable to create thread");
     /* Start the FreeRTOS scheduler */
     vTaskStartScheduler();
 
