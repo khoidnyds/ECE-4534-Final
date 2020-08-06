@@ -6,6 +6,7 @@
 #include <ti/drivers/Timer.h>
 
 #include "ti_drivers_config.h"
+#define Timer_US_PERIOD_IN_US   70000 //70ms
 
 //#include "debug.h"
 #include "queues.h"
@@ -15,6 +16,8 @@
 void init_statsTimer();
 void init_pubTimer();
 
+void initTimerUS();
+void timerCallback(Timer_Handle handle, int_fast16_t status);
 /*
  * Send a message to the stats queue which will trigger it to push the current data to the broker
  */

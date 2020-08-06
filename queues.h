@@ -5,6 +5,8 @@
 #include <queue.h>
 #include "debug_if.h"
 #include <string.h>
+#include <stdio.h>
+#include "uart_term.h"
 
 #define QUEUESIZE 2
 #define MQTT_TOPIC_SIZE 40
@@ -35,6 +37,11 @@ typedef struct {
     int numDrop;
 } unpackedMsg;
 
+typedef struct {
+    int triggerUS;
+} msgTriggerUS;
+
+
 int init_queue();
 
 int sendToMqttQueueIsr(mqttMsg*);
@@ -48,5 +55,9 @@ int receiveFromStatsQueue(unpackedMsg*);
 int sendToGenQueueIsr(unpackedMsg*);
 int sendToGenQueue(unpackedMsg*);
 int receiveFromGenQueue(unpackedMsg*);
+
+
+int sendMsgToQueueTriggerUS(msgTriggerUS* outMsg);
+int receiveMsgFromQueueTriggerUS(msgTriggerUS* inMsg);
 
 #endif
