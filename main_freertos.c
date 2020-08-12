@@ -59,7 +59,7 @@ extern void * mainThread(void *arg0);
 #define MAIN_TASK_STACK_SIZE 4096
 
 #define GEN_TASK_PRIORITY 2
-#define GEN_TASK_STACK_SIZE 2048
+#define GEN_TASK_STACK_SIZE 2500
 
 
 #define RGB_TASK_PRIORITY 2

@@ -6,7 +6,7 @@
 #include "ti_drivers_config.h"
 #include <ti/drivers/GPIO.h>
 
-#define Timer_US_PERIOD_IN_US   70000 //70ms
+#define Timer_US_PERIOD_IN_US   100000
 #define AMBIENT_TEMP            30 // in Celcius
 #define HIGH                    1
 #define LOW                     0

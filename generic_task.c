@@ -8,6 +8,7 @@ void* genTask(void* args){
     int seqNum_us3 = 0;
     int seqNum_us4 = 0;
     int seqNum_switch = 0;
+    int seqNum_rgb = 0;
 
     while(1){
         unpackedMsg outMsg;
@@ -22,25 +23,29 @@ void* genTask(void* args){
         outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
         dbgOutputLoc(DLOC_GT_MAKEMSG_TS);
 
-        if(strcmp(outMsg.topic, PUB_TOPIC_US1)){
+        if(!strcmp(outMsg.topic, PUB_TOPIC_US1)){
             outMsg.sequenceNum=seqNum_us1;
             seqNum_us1++;
         }
-        else if(strcmp(outMsg.topic, PUB_TOPIC_US2)){
+        else if(!strcmp(outMsg.topic, PUB_TOPIC_US2)){
             outMsg.sequenceNum=seqNum_us2;
             seqNum_us2++;
         }
-        else if(strcmp(outMsg.topic, PUB_TOPIC_US3)){
+        else if(!strcmp(outMsg.topic, PUB_TOPIC_US3)){
             outMsg.sequenceNum=seqNum_us3;
             seqNum_us3++;
         }
-        else if(strcmp(outMsg.topic, PUB_TOPIC_US4)){
+        else if(!strcmp(outMsg.topic, PUB_TOPIC_US4)){
             outMsg.sequenceNum=seqNum_us4;
             seqNum_us4++;
         }
-        else if(strcmp(outMsg.topic, PUB_TOPIC_SWITCH)){
+        else if(!strcmp(outMsg.topic, PUB_TOPIC_SWITCH)){
             outMsg.sequenceNum=seqNum_switch;
             seqNum_switch++;
+        }
+        else if(!strcmp(outMsg.topic, PUB_TOPIC_RGB)){
+            outMsg.sequenceNum=seqNum_rgb;
+            seqNum_rgb++;
         }
         dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
 

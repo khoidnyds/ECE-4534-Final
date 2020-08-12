@@ -66,7 +66,6 @@ void mainThread(void * args){
 
 
         if(recMsg.event == APP_MQTT_PUBLISH){
-//            Message("\r\nSMS");
             MQTT_IF_Publish(mqttClientHandle, recMsg.topic, recMsg.payload, QOS);
         }
         // Sensors never receive message

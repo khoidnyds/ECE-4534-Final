@@ -17,14 +17,12 @@ void initTimerUS()
     params.timerMode = Timer_CONTINUOUS_CALLBACK;
     params.timerCallback = usTrigger;
 
-    Message("\r\nUSTO");
     timerUS = Timer_open(CONFIG_TIMER_1, &params);
 
     if (timerUS == NULL) {
         while(1);
     }
 
-    Message("\r\nUSTS");
     if (Timer_start(timerUS) == Timer_STATUS_ERROR) {
         while(1);
     }

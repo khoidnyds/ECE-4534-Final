@@ -20,7 +20,6 @@ int sendToMqttQueueIsr(mqttMsg* outMsg){
     if (result != pdTRUE)
         return -1;
     dbgOutputLoc(DLOC_Q_SEND_MQ_SUCC);
-    //Message("\r\nSMI");
     return 0;
 }
 int sendToMqttQueue(mqttMsg* outMsg){
@@ -29,7 +28,6 @@ int sendToMqttQueue(mqttMsg* outMsg){
     if (result != pdTRUE)
         return -1;
     dbgOutputLoc(DLOC_Q_SEND_MQ_SUCC);
-    //Message("\r\nSM");
     return 0;
 }
 
@@ -39,7 +37,6 @@ int receiveFromMqttQueue(mqttMsg* inMsg){
     if (result != pdPASS)
         return -1;
     dbgOutputLoc(DLOC_Q_REC_MQ_SUCC);
-    //Message("\r\nRM");
     return 0;
 }
 
@@ -49,7 +46,6 @@ int sendToGenQueueIsr(unpackedMsg* outMsg){
     if (result != pdTRUE)
         return -1;
     dbgOutputLoc(DLOC_Q_SEND_GEN_SUCC);
-    //Message("\r\nSGI");
     return 0;
 }
 
@@ -60,7 +56,6 @@ int sendToGenQueue(unpackedMsg* outMsg){
     if (result != pdTRUE)
         return -1;
     dbgOutputLoc(DLOC_Q_SEND_GEN_SUCC);
-    //Message("\r\nSG");
     return 0;
 }
 
@@ -70,7 +65,6 @@ int receiveFromGenQueue(unpackedMsg* inMsg){
     if (result != pdPASS)
         return -1;
     dbgOutputLoc(DLOC_Q_REC_GEN_SUCC);
-    //Message("\r\nRG");
     return 0;
 }
 
@@ -82,7 +76,6 @@ int sendMsgToQueueTriggerRGBSwitch(msgTriggerRGBSwitch* outMsg){
         return -1;
     }
     //dbgOutputLoc(DLOC_MESSAGE_SWITCH_SEND_SUCCESS);
-    Message("\r\nSTR");
 return 0;
 }
 
@@ -93,6 +86,5 @@ int receiveMsgFromQueueTriggerRGBSwitch(msgTriggerRGBSwitch* inMsg){
         return -1;
     }
     //dbgOutputLoc(DLOC_MESSAGE_SWITCH_RECEIVE_SUCCESS);
-    Message("\r\nRTR");
     return 0;
 }

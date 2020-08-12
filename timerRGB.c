@@ -13,12 +13,10 @@ void initTimerRGB()
     params.timerCallback = timerRGBCallback;
     timerRGB = Timer_open(CONFIG_TIMER_2, &params);
 
-    Message("\r\nRTO");
     if (timerRGB == NULL) {
         errorHalt("Timer RGB open failed");
     }
 
-    Message("\r\nRTS");
     if (Timer_start(timerRGB) == Timer_STATUS_ERROR) {
         errorHalt("Timer RGB start failed");
     }
@@ -29,7 +27,6 @@ void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
 {
     msgTriggerRGBSwitch newTriggerRGBSwitch;
     sendMsgToQueueTriggerRGBSwitch(&newTriggerRGBSwitch);
-
 
     unpackedMsg outMsg;
 

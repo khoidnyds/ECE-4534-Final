@@ -59,7 +59,7 @@ Crypto1.$name = "CONFIG_Crypto_0";
 GPIO1.$name           = "US1_TRIGGER";
 GPIO1.mode            = "Output";
 GPIO1.pull            = "Pull Down";
-GPIO1.gpioPin.$assign = "boosterpack.27";
+GPIO1.gpioPin.$assign = "boosterpack.4";
 
 GPIO2.$name           = "US2_TRIGGER";
 GPIO2.mode            = "Output";
@@ -80,7 +80,6 @@ GPIO5.$name            = "US1_ECHO";
 GPIO5.pull             = "Pull Down";
 GPIO5.interruptTrigger = "Both Edges";
 GPIO5.callbackFunction = "getTime";
-GPIO5.gpioPin.$assign  = "boosterpack.4";
 
 GPIO6.$name            = "US2_ECHO";
 GPIO6.pull             = "Pull Down";
@@ -100,8 +99,9 @@ GPIO8.interruptTrigger = "Both Edges";
 GPIO8.callbackFunction = "getTime";
 GPIO8.gpioPin.$assign  = "boosterpack.26";
 
-GPIO9.$name = "LIMIT_SWITCH";
-GPIO9.pull  = "Pull Up";
+GPIO9.$name           = "LIMIT_SWITCH";
+GPIO9.pull            = "Pull Up";
+GPIO9.gpioPin.$assign = "boosterpack.27";
 
 I2C1.$name              = "CONFIG_I2C_0";
 I2C1.i2c.$name          = "MyI2C1";
@@ -117,6 +117,10 @@ SPI1.mode                     = "Four Pin SS Active Low";
 SPI1.defaultTxBufferValue     = "0";
 SPI1.spi.$name                = "MySPI1";
 SPI1.spi.$assign              = "SPI0";
+SPI1.spi.sclkPin.$assign      = "boosterpack.17";
+SPI1.spi.misoPin.$assign      = "boosterpack.28";
+SPI1.spi.mosiPin.$assign      = "boosterpack.15";
+SPI1.spi.ssPin.$assign        = "boosterpack.30";
 SPI1.spi.dmaRxChannel.$assign = "UDMA_CH6";
 SPI1.spi.dmaTxChannel.$assign = "UDMA_CH7";
 
@@ -144,10 +148,6 @@ SlNet1.ifName = "CC32xx";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO9.gpioPin.$suggestSolution    = "58";
-SPI1.spi.sclkPin.$suggestSolution = "45";
-SPI1.spi.misoPin.$suggestSolution = "53";
-SPI1.spi.mosiPin.$suggestSolution = "7";
-SPI1.spi.ssPin.$suggestSolution   = "50";
-Timer2.timer.$suggestSolution     = "Timer2";
-Timer3.timer.$suggestSolution     = "Timer1";
+GPIO5.gpioPin.$suggestSolution = "58";
+Timer2.timer.$suggestSolution  = "Timer2";
+Timer3.timer.$suggestSolution  = "Timer1";
