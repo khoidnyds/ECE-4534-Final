@@ -98,6 +98,5 @@ uint16_t clearRaw, redRaw, greenRaw, blueRaw;
 
 void* rgbTask(void *arg0);
 void i2cCallback(I2C_Handle i2c, I2C_Transaction* i2cTransaction, bool success);
-void initSwitch();
 
 #endif /* TASK_RGB_H_ */

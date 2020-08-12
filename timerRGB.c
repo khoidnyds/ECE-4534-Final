@@ -27,8 +27,8 @@ void initTimerRGB()
 
 void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
 {
-//    msgTriggerRGBSwitch newTriggerRGBSwitch;
-//    sendMsgToQueueTriggerRGBSwitch(&newTriggerRGBSwitch);
+    msgTriggerRGBSwitch newTriggerRGBSwitch;
+    sendMsgToQueueTriggerRGBSwitch(&newTriggerRGBSwitch);
 
 
     unpackedMsg outMsg;
