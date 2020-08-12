@@ -49,9 +49,7 @@
 #include "ti_drivers_config.h"
 
 #include "generic_task.h"
-#include "stats.h"
 #include "debug_if.h"
-#include "us_task.h"
 #include "task_rgb.h"
 
 extern void * mainThread(void *arg0);

@@ -1,37 +1,6 @@
 #include "pubTimer.h"
 
 
-void init_statsTimer(){
-    Timer_Handle timer0;
-    Timer_Params params;
-    Timer_init();
-    Timer_Params_init(&params);
-    params.period = 1;
-    params.periodUnits = Timer_PERIOD_HZ;
-    params.timerMode = Timer_CONTINUOUS_CALLBACK;
-    params.timerCallback = statsTimerCallback;
-    timer0 = Timer_open(CONFIG_TIMER_0, &params);
-    if (timer0 == NULL){
-        errorHalt("Timer0 init failed");
-    }
-    if (Timer_start(timer0) == Timer_STATUS_ERROR){
-        errorHalt("Timer0 init failed");
-    }
-    dbgOutputLoc(DLOC_P_STATS_TIMER_INITD);
-}
-
-void statsTimerCallback(Timer_Handle myHandle, int_fast16_t status){
-    dbgOutputLoc(DLOC_P_STAT_TIMER_CALL_START);
-    unpackedMsg msg;
-    msg.statsCmd = PUSH;
-    int result = sendToStatsQueueIsr(&msg);
-    if(result<0){
-        dbgOutputLoc(DLOC_P_STAT_TIMER_CALL_FAIL_STATQ);
-        errorHalt("Unable to add to stats queue");
-    }
-    dbgOutputLoc(DLOC_P_STAT_TIMER_CALL_SUCC);
-}
-
 void initTimerUS()
 {
     start=0;
@@ -49,7 +18,7 @@ void initTimerUS()
     params.timerCallback = usTrigger;
 
     Message("\r\nUSTO");
-    timerUS = Timer_open(CONFIG_TIMER_2, &params);
+    timerUS = Timer_open(CONFIG_TIMER_1, &params);
 
     if (timerUS == NULL) {
         while(1);

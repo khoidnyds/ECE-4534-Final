@@ -37,6 +37,8 @@ typedef struct {
     int numDrop;
 } unpackedMsg;
 
+typedef struct {
+} msgTriggerRGBSwitch;
 
 int init_queue();
 
@@ -48,5 +50,7 @@ int sendToGenQueueIsr(unpackedMsg*);
 int sendToGenQueue(unpackedMsg*);
 int receiveFromGenQueue(unpackedMsg*);
 
+int sendMsgToQueueTriggerRGBSwitch(msgTriggerRGBSwitch*);
+int receiveMsgFromQueueTriggerRGBSwitch(msgTriggerRGBSwitch*);
 
 #endif

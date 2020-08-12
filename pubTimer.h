@@ -23,14 +23,12 @@ state currentState;
 typedef enum {START, END} GPIO_int;
 GPIO_int currentInt;
 
-void init_statsTimer();
 
 void initTimerUS();
 void usTrigger(Timer_Handle handle, int_fast16_t status);
 /*
  * Send a message to the stats queue which will trigger it to push the current data to the broker
  */
-void statsTimerCallback(Timer_Handle myHandle, int_fast16_t status);
 void getTime(uint_least8_t index);
 void fsm(uint_least8_t pinin, uint_least8_t pinout);
 

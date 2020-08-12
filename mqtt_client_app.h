@@ -67,6 +67,7 @@
 #include "queues.h"
 #include "pubTimer.h"
 #include "generic_task.h"
+#include "timerRGB.h"
 
 extern int32_t ti_net_SlNet_initConfig();
 

@@ -12,14 +12,16 @@ void initTimerRGB()
     params.timerMode = Timer_CONTINUOUS_CALLBACK;
     params.timerCallback = timerRGBCallback;
     timerRGB = Timer_open(CONFIG_TIMER_2, &params);
-    if (timerRGB == NULL) {
-        while(1);
-    }
+
     Message("\r\nRTO");
-    if (Timer_start(timerRGB) == Timer_STATUS_ERROR) {
-        while(1);
+    if (timerRGB == NULL) {
+        errorHalt("Timer RGB open failed");
     }
+
     Message("\r\nRTS");
+    if (Timer_start(timerRGB) == Timer_STATUS_ERROR) {
+        errorHalt("Timer RGB start failed");
+    }
     return;
 }
 
@@ -27,6 +29,25 @@ void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
 {
 //    msgTriggerRGBSwitch newTriggerRGBSwitch;
 //    sendMsgToQueueTriggerRGBSwitch(&newTriggerRGBSwitch);
+
+
+    unpackedMsg outMsg;
+
+    if(GPIO_read(LIMIT_SWITCH)==LOW){
+        strcpy(outMsg.payload, "yes");
+    }
+    else{
+        strcpy(outMsg.payload, "no");
+    }
+    outMsg.statsCmd = PUBLISHED;
+    outMsg.msgType = GENERAL;
+    strcpy(outMsg.topic, PUB_TOPIC_SWITCH);
+
+    int success = sendToGenQueueIsr(&outMsg);
+    if(success){
+        Message("\r\nSend Switch message failed");
+        while(1);
+    }
 }
 
 

@@ -58,6 +58,7 @@ void mainThread(void * args){
     while (recMsg.event!=APP_MQTT_CONNACK);
 
     initTimerUS();
+    initTimerRGB();
 
     while(1){
 
@@ -65,7 +66,7 @@ void mainThread(void * args){
 
 
         if(recMsg.event == APP_MQTT_PUBLISH){
-            Message("\r\nSMS");
+//            Message("\r\nSMS");
             MQTT_IF_Publish(mqttClientHandle, recMsg.topic, recMsg.payload, QOS);
         }
         // Sensors never receive message
