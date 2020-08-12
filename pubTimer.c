@@ -108,7 +108,7 @@ void getTime(uint_least8_t index){
         end = Timer_getCount(timerUS);
 
         double speed = (331 + 0.6 * AMBIENT_TEMP) / 1000;
-        int distance = speed * (end-start) / 16; //80MHz and 2*distance
+        unsigned int distance = speed * (end-start) / 16 * 10; //80MHz and 2*distance
 
         unpackedMsg outMsg;
         switch(index){
