@@ -56,16 +56,17 @@
 extern void * mainThread(void *arg0);
 
 /* Stack size in bytes */
-#define THREADSTACKSIZE   4096
+#define MAIN_TASK_PRIORITY 3
+#define MAIN_TASK_STACK_SIZE 4096
 
 #define GEN_TASK_PRIORITY 2
-#define GEN_TASK_STACK_SIZE (2*1024)
+#define GEN_TASK_STACK_SIZE 2048
 
 #define STATS_TASK_PRIORITY 2
-#define STATS_TASK_STACK_SIZE (2*1024)
+#define STATS_TASK_STACK_SIZE 1024
 
 #define US_TASK_PRIORITY 2
-#define US_TASK_STACK_SIZE 4096
+#define US_TASK_STACK_SIZE 2048
 /*
  *  ======== main ========
  */
@@ -78,17 +79,16 @@ int main(void)
     if(init_queue())
         errorHalt("Unable to create queues");
 
-
     pthread_t thread;
     pthread_attr_t pAttrs;
     struct sched_param priParam;
 
     pthread_attr_init(&pAttrs);
-    priParam.sched_priority = 3;
+    priParam.sched_priority = MAIN_TASK_PRIORITY;
     if(pthread_attr_setdetachstate(&pAttrs, PTHREAD_CREATE_DETACHED))
         errorHalt(" pthread_attr_setdetachstate() failed");
     pthread_attr_setschedparam(&pAttrs, &priParam);
-    if(pthread_attr_setstacksize(&pAttrs, THREADSTACKSIZE))
+    if(pthread_attr_setstacksize(&pAttrs, MAIN_TASK_STACK_SIZE))
        errorHalt("Unable to set stack size");
     if(pthread_create(&thread, &pAttrs, mainThread, NULL))
         errorHalt("Unable to set create thread");
@@ -107,35 +107,36 @@ int main(void)
         errorHalt("Unable to set stack size");
     if(pthread_create(&gen_thread, &gen_pAttrs, genTask, NULL))
         errorHalt("Unable to create thread");
+//
+//
+////    pthread_t stats_thread;
+////    pthread_attr_t stats_pAttrs;
+////    struct sched_param stats_priParam;
+////
+////    pthread_attr_init(&stats_pAttrs);
+////    stats_priParam.sched_priority = STATS_TASK_PRIORITY;
+////    if(pthread_attr_setdetachstate(&stats_pAttrs, PTHREAD_CREATE_DETACHED))
+////        errorHalt(" pthread_attr_setdetachstate() failed");
+////    pthread_attr_setschedparam(&stats_pAttrs, &stats_priParam);
+////    if(pthread_attr_setstacksize(&stats_pAttrs, STATS_TASK_STACK_SIZE))
+////        errorHalt("Unable to set stack size");
+////    if(pthread_create(&stats_thread, &stats_pAttrs, statsTask, NULL))
+////        errorHalt("Unable to create thread");
+//
+//    pthread_t us_thread;
+//    pthread_attr_t us_pAttrs;
+//    struct sched_param us_priParam;
+//
+//    pthread_attr_init(&us_pAttrs);
+//    us_priParam.sched_priority = US_TASK_PRIORITY;
+//    if(pthread_attr_setdetachstate(&us_pAttrs, PTHREAD_CREATE_DETACHED))
+//        errorHalt(" pthread_attr_setdetachstate() failed");
+//    pthread_attr_setschedparam(&us_pAttrs, &us_priParam);
+//    if(pthread_attr_setstacksize(&us_pAttrs, US_TASK_STACK_SIZE))
+//        errorHalt("Unable to set stack size");
+//    if(pthread_create(&us_thread, &us_pAttrs, usTask, NULL))
+//        errorHalt("Unable to create thread");
 
-
-    pthread_t stats_thread;
-    pthread_attr_t stats_pAttrs;
-    struct sched_param stats_priParam;
-
-    pthread_attr_init(&stats_pAttrs);
-    stats_priParam.sched_priority = STATS_TASK_PRIORITY;
-    if(pthread_attr_setdetachstate(&stats_pAttrs, PTHREAD_CREATE_DETACHED))
-        errorHalt(" pthread_attr_setdetachstate() failed");
-    pthread_attr_setschedparam(&stats_pAttrs, &stats_priParam);
-    if(pthread_attr_setstacksize(&stats_pAttrs, STATS_TASK_STACK_SIZE))
-        errorHalt("Unable to set stack size");
-    if(pthread_create(&stats_thread, &stats_pAttrs, statsTask, NULL))
-        errorHalt("Unable to create thread");
-
-    pthread_t us_thread;
-    pthread_attr_t us_pAttrs;
-    struct sched_param us_priParam;
-
-    pthread_attr_init(&us_pAttrs);
-    us_priParam.sched_priority = US_TASK_PRIORITY;
-    if(pthread_attr_setdetachstate(&us_pAttrs, PTHREAD_CREATE_DETACHED))
-        errorHalt(" pthread_attr_setdetachstate() failed");
-    pthread_attr_setschedparam(&us_pAttrs, &us_priParam);
-    if(pthread_attr_setstacksize(&us_pAttrs, US_TASK_STACK_SIZE))
-        errorHalt("Unable to set stack size");
-    if(pthread_create(&us_thread, &us_pAttrs, usTask, NULL))
-        errorHalt("Unable to create thread");
     /* Start the FreeRTOS scheduler */
     vTaskStartScheduler();
 

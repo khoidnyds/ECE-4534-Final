@@ -1,6 +1,8 @@
 #include "mqtt_client_app.h"
 
-char* allTopics[ALL_TOPIC_COUNT] = {SUB_TOPIC_0, SUB_TOPIC_1, SUB_TOPIC_2, SUB_TOPIC_3, PUB_TOPIC_0};
+char* allTopics[ALL_TOPIC_COUNT] = {SUB_TOPIC_0, SUB_TOPIC_1, SUB_TOPIC_2, SUB_TOPIC_3,
+                                    PUB_TOPIC_US1, PUB_TOPIC_US2, PUB_TOPIC_US3, PUB_TOPIC_US4,
+                                    PUB_TOPIC_RGB, PUB_TOPIC_SWITCH, STATS_PUB_TOPIC};
 
 void MQTT_EventCallback(int32_t event){
     mqttMsg connackMsg = {APP_MQTT_CONNACK, "", ""};
@@ -23,8 +25,9 @@ void mainThread(void * args){
     if(ti_net_SlNet_initConfig())
         LOG_ERROR("Failed to initialize SlNetSock\n\r");
 
-    if(WifiInit())
+    if(WifiInit()){
         errorHalt("Error initializing WiFi");
+    }
     char ClientId[13] = "";
     SetClientIdNamefromMacAddress(ClientId);
     mqttClientParams.clientID = ClientId;
@@ -45,30 +48,35 @@ void mainThread(void * args){
     if(mqttClientHandle < 0)
         errorHalt("Error connecting");
 
-    initTimerUS();
-    init_pubTimer();
-    init_statsTimer();
 
     mqttMsg recMsg;
-    unpackedMsg unpMsg;
+    //unpackedMsg unpMsg;
 
-    do
+    do{
         receiveFromMqttQueue(&recMsg);
+    }
     while (recMsg.event!=APP_MQTT_CONNACK);
 
+    initTimerUS();
+
     while(1){
+
         receiveFromMqttQueue(&recMsg);
+
+
         if(recMsg.event == APP_MQTT_PUBLISH){
+            Message("\r\nSMS");
             MQTT_IF_Publish(mqttClientHandle, recMsg.topic, recMsg.payload, QOS);
         }
-        else if(recMsg.event == APP_MQTT_RECEIVE){
-            unpMsg.statsCmd=RECEIVED;
-            strcpy(unpMsg.topic, recMsg.topic);
-            json_unpack(&unpMsg, recMsg.payload);
-            if(strcmp(recMsg.topic, SUB_TOPIC_3)==0)
-                sendToGenQueue(&unpMsg);
-            sendToStatsQueue(&unpMsg);
-        }
+        // Sensors never receive message
+//        else if(recMsg.event == APP_MQTT_RECEIVE){
+//            unpMsg.statsCmd=RECEIVED;
+//            strcpy(unpMsg.topic, recMsg.topic);
+//            json_unpack(&unpMsg, recMsg.payload);
+//            if(strcmp(recMsg.topic, SUB_TOPIC_3)==0)
+//                sendToGenQueue(&unpMsg);
+//            sendToStatsQueue(&unpMsg);
+//        }
     }
 }
 

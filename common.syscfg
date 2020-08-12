@@ -25,6 +25,7 @@ const GPIO6          = GPIO.addInstance();
 const GPIO7          = GPIO.addInstance();
 const GPIO8          = GPIO.addInstance();
 const GPIO9          = GPIO.addInstance();
+const GPIO10         = GPIO.addInstance();
 const I2C            = scripting.addModule("/ti/drivers/I2C", {}, false);
 const I2C1           = I2C.addInstance();
 const Power          = scripting.addModule("/ti/drivers/Power");
@@ -61,7 +62,7 @@ Crypto1.$name = "CONFIG_Crypto_0";
 GPIO1.$name           = "US1_TRIGGER";
 GPIO1.mode            = "Output";
 GPIO1.pull            = "Pull Down";
-GPIO1.gpioPin.$assign = "boosterpack.24";
+GPIO1.gpioPin.$assign = "boosterpack.27";
 
 GPIO2.$name           = "US2_TRIGGER";
 GPIO2.mode            = "Output";
@@ -81,24 +82,33 @@ GPIO4.gpioPin.$assign = "boosterpack.19";
 GPIO5.$name            = "US1_ECHO";
 GPIO5.pull             = "Pull Down";
 GPIO5.interruptTrigger = "Both Edges";
+GPIO5.callbackFunction = "getTime";
 GPIO5.gpioPin.$assign  = "boosterpack.4";
 
 GPIO6.$name            = "US2_ECHO";
 GPIO6.pull             = "Pull Down";
 GPIO6.interruptTrigger = "Both Edges";
+GPIO6.callbackFunction = "getTime";
 GPIO6.gpioPin.$assign  = "boosterpack.5";
 
 GPIO7.$name            = "US3_ECHO";
 GPIO7.pull             = "Pull Down";
 GPIO7.interruptTrigger = "Both Edges";
+GPIO7.callbackFunction = "getTime";
 GPIO7.gpioPin.$assign  = "boosterpack.8";
 
 GPIO8.$name            = "US4_ECHO";
 GPIO8.pull             = "Pull Down";
 GPIO8.interruptTrigger = "Both Edges";
+GPIO8.callbackFunction = "getTime";
 GPIO8.gpioPin.$assign  = "boosterpack.26";
 
 GPIO9.$name = "LIMIT_SWITCH";
+
+GPIO10.$name           = "TESTING";
+GPIO10.mode            = "Output";
+GPIO10.pull            = "Pull Down";
+GPIO10.gpioPin.$assign = "boosterpack.24";
 
 I2C1.$name              = "CONFIG_I2C_0";
 I2C1.i2c.$name          = "MyI2C1";

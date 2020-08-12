@@ -12,7 +12,7 @@ MQTTClient_Will mqttWillParams =
 };
 MQTT_IF_ClientParams_t mqttClientParams =
 {
-     "1234567890124",           // client ID
+     "1234567890129",           // client ID
      MQTT_CLIENT_USERNAME,      // user name
      MQTT_CLIENT_PASSWORD,      // password
      MQTT_CLIENT_KEEPALIVE,     // keep-alive time
@@ -90,6 +90,7 @@ int WifiInit(){
         }
         else{
             LOG_INFO("profile added %s\r\n", SSID_NAME);
+            ret = 0;
         }
     }
 

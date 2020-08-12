@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "uart_term.h"
 
-#define QUEUESIZE 2
+#define QUEUESIZE 3
 #define MQTT_TOPIC_SIZE 40
 #define MQTT_PAYLOAD_SIZE 400
 typedef enum{
@@ -37,18 +37,6 @@ typedef struct {
     int numDrop;
 } unpackedMsg;
 
-typedef struct {
-    int triggerUS;
-} msgTriggerUS;
-
-typedef enum { ultrasonic, color, limitSwitch } msgType;
-
-typedef enum { front, left, right, back } posUS;
-typedef struct {
-    msgType type;
-    posUS position;
-    unsigned int distance;
-} msgUS;
 
 int init_queue();
 
@@ -64,10 +52,5 @@ int sendToGenQueueIsr(unpackedMsg*);
 int sendToGenQueue(unpackedMsg*);
 int receiveFromGenQueue(unpackedMsg*);
 
-
-int sendMsgToQueueTriggerUS(msgTriggerUS* outMsg);
-int receiveMsgFromQueueTriggerUS(msgTriggerUS* inMsg);
-int sendMsgToQueueUS(msgUS* outMsg);
-int receiveMsgFromQueueUS(msgUS* inMsg);
 
 #endif

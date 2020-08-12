@@ -131,14 +131,13 @@ extern int32_t ti_net_SlNet_initConfig();
 #define SUB_TOPIC_2             "/team3/"OTHER_BOARD_ID_2"/out"
 #define SUB_TOPIC_3             "/team3/"THIS_BOARD_ID"/in"
 
-#define NUM_PUB_TOPICS           1
-#define PUB_TOPIC_0              "/team3/sensors/us1"
-#define PUB_TOPIC_1              "/team3/sensors/us2"
-#define PUB_TOPIC_2              "/team3/sensors/us3"
-#define PUB_TOPIC_3              "/team3/sensors/us4"
-#define PUB_TOPIC_4              "/team3/sensors/rgb"
-#define PUB_TOPIC_5              "/team3/sensors/switch"
-#define PUB_MESSAGE              "Sensors values"
+#define NUM_PUB_TOPICS           7
+#define PUB_TOPIC_US1            "/team3/sensors/us1"
+#define PUB_TOPIC_US2            "/team3/sensors/us2"
+#define PUB_TOPIC_US3            "/team3/sensors/us3"
+#define PUB_TOPIC_US4            "/team3/sensors/us4"
+#define PUB_TOPIC_RGB            "/team3/sensors/rgb"
+#define PUB_TOPIC_SWITCH         "/team3/sensors/switch"
 
 #define ALL_TOPIC_COUNT          (NUM_SUB_TOPICS + NUM_PUB_TOPICS)
 
