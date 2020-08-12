@@ -18,7 +18,7 @@
 
 double start, end;
 Timer_Handle timerUS;
-typedef enum {INIT, STATE_US1, STATE_US2, STATE_US3, STATE_US4} state;
+typedef enum {INIT, STATE_US_FRONT, STATE_US_LEFT, STATE_US_RIGHT} state;
 state currentState;
 typedef enum {START, END} GPIO_int;
 GPIO_int currentInt;

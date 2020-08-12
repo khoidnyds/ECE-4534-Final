@@ -132,17 +132,15 @@ extern int32_t ti_net_SlNet_initConfig();
 #define SUB_TOPIC_2             "/team3/"OTHER_BOARD_ID_2"/out"
 #define SUB_TOPIC_3             "/team3/"THIS_BOARD_ID"/in"
 
-#define NUM_PUB_TOPICS           7
-#define PUB_TOPIC_US1            "/team3/sensorsK/us1"
-#define PUB_TOPIC_US2            "/team3/sensorsK/us2"
-#define PUB_TOPIC_US3            "/team3/sensorsK/us3"
-#define PUB_TOPIC_US4            "/team3/sensorsK/us4"
+#define NUM_PUB_TOPICS           5
+#define PUB_TOPIC_US_FRONT       "/team3/sensorsK/usFront"
+#define PUB_TOPIC_US_LEFT        "/team3/sensorsK/usLeft"
+#define PUB_TOPIC_US_RIGHT       "/team3/sensorsK/usRight"
 #define PUB_TOPIC_RGB            "/team3/sensorsK/rgb"
 #define PUB_TOPIC_SWITCH         "/team3/sensorsK/switch"
 
 #define ALL_TOPIC_COUNT          (NUM_SUB_TOPICS + NUM_PUB_TOPICS)
 
-#define STATS_PUB_TOPIC          "/team3/sensors/stats"
 
 extern char* allTopics[ALL_TOPIC_COUNT];
 

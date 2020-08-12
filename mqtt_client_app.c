@@ -1,8 +1,8 @@
 #include "mqtt_client_app.h"
 
 char* allTopics[ALL_TOPIC_COUNT] = {SUB_TOPIC_0, SUB_TOPIC_1, SUB_TOPIC_2, SUB_TOPIC_3,
-                                    PUB_TOPIC_US1, PUB_TOPIC_US2, PUB_TOPIC_US3, PUB_TOPIC_US4,
-                                    PUB_TOPIC_RGB, PUB_TOPIC_SWITCH, STATS_PUB_TOPIC};
+                                    PUB_TOPIC_US_FRONT, PUB_TOPIC_US_LEFT, PUB_TOPIC_US_RIGHT,
+                                    PUB_TOPIC_RGB, PUB_TOPIC_SWITCH};
 
 void MQTT_EventCallback(int32_t event){
     mqttMsg connackMsg = {APP_MQTT_CONNACK, "", ""};

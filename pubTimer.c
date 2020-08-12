@@ -31,24 +31,20 @@ void initTimerUS()
 void usTrigger(Timer_Handle handle, int_fast16_t status){
     switch(currentState){
         case INIT:
-            fsm(US1_TRIGGER, US1_ECHO);
-            currentState = STATE_US1;
+            fsm(US_FRONT_TRIGGER, US_FRONT_ECHO);
+            currentState = STATE_US_FRONT;
             break;
-        case STATE_US1:
-            fsm(US2_TRIGGER, US2_ECHO);
-            currentState = STATE_US2;
+        case STATE_US_FRONT:
+            fsm(US_LEFT_TRIGGER, US_LEFT_ECHO);
+            currentState = STATE_US_LEFT;
             break;
-        case STATE_US2:
-            fsm(US3_TRIGGER, US3_ECHO);
-            currentState = STATE_US3;
+        case STATE_US_LEFT:
+            fsm(US_RIGHT_TRIGGER, US_RIGHT_ECHO);
+            currentState = STATE_US_RIGHT;
             break;
-        case STATE_US3:
-            fsm(US4_TRIGGER, US4_ECHO);
-            currentState = STATE_US4;
-            break;
-        case STATE_US4:
-            fsm(US1_TRIGGER, US1_ECHO);
-            currentState = STATE_US1;
+        case STATE_US_RIGHT:
+            fsm(US_FRONT_TRIGGER, US_FRONT_ECHO);
+            currentState = STATE_US_FRONT;
             break;
         default:
             break;
@@ -75,21 +71,21 @@ void getTime(uint_least8_t index){
         end = Timer_getCount(timerUS);
 
         double speed = (331 + 0.6 * AMBIENT_TEMP) / 1000;
-        unsigned int distance = speed * (end-start) / 16 * 10; //80MHz and 2*distance
-
+        unsigned int distance;
+        if(end>start)
+            distance = speed * (end-start) / 16 * 10; //80MHz and 2*distance
+        else
+            distance = speed * (start-end) / 16 * 10;
         unpackedMsg outMsg;
         switch(index){
-            case US1_ECHO:
-                strcpy(outMsg.topic, PUB_TOPIC_US1);
+            case US_FRONT_ECHO:
+                strcpy(outMsg.topic, PUB_TOPIC_US_FRONT);
                 break;
-            case US2_ECHO:
-                strcpy(outMsg.topic, PUB_TOPIC_US2);
+            case US_LEFT_ECHO:
+                strcpy(outMsg.topic, PUB_TOPIC_US_LEFT);
                 break;
-            case US3_ECHO:
-                strcpy(outMsg.topic, PUB_TOPIC_US3);
-                break;
-            case US4_ECHO:
-                strcpy(outMsg.topic, PUB_TOPIC_US4);
+            case US_RIGHT_ECHO:
+                strcpy(outMsg.topic, PUB_TOPIC_US_RIGHT);
                 break;
             default:
                 break;
