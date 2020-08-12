@@ -44,10 +44,6 @@ int sendToMqttQueueIsr(mqttMsg*);
 int sendToMqttQueue(mqttMsg*);
 int receiveFromMqttQueue(mqttMsg*);
 
-int sendToStatsQueueIsr(unpackedMsg*);
-int sendToStatsQueue(unpackedMsg*);
-int receiveFromStatsQueue(unpackedMsg*);
-
 int sendToGenQueueIsr(unpackedMsg*);
 int sendToGenQueue(unpackedMsg*);
 int receiveFromGenQueue(unpackedMsg*);

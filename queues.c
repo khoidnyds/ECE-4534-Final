@@ -1,15 +1,13 @@
 #include "queues.h"
 
 QueueHandle_t xQueue_mqtt  = NULL;
-QueueHandle_t xQueue_stats = NULL;
 QueueHandle_t xQueue_gen   = NULL;
 
 int init_queue(){
     xQueue_mqtt = xQueueCreate(QUEUESIZE, sizeof(mqttMsg));
-    xQueue_stats = xQueueCreate(QUEUESIZE, sizeof(unpackedMsg));
     xQueue_gen = xQueueCreate(QUEUESIZE, sizeof(unpackedMsg));
 
-    if (xQueue_mqtt==NULL || xQueue_stats==NULL || xQueue_gen==NULL )
+    if (xQueue_mqtt==NULL || xQueue_gen==NULL )
         return -1;
     dbgOutputLoc(DLOC_Q_INIT_SUCC);
     return 0;
@@ -40,36 +38,6 @@ int receiveFromMqttQueue(mqttMsg* inMsg){
         return -1;
     dbgOutputLoc(DLOC_Q_REC_MQ_SUCC);
     Message("\r\nRM");
-    return 0;
-}
-
-int sendToStatsQueueIsr(unpackedMsg* outMsg){
-    dbgOutputLoc(DLOC_Q_SEND_STAT_START);
-    BaseType_t result = xQueueSendToBackFromISR(xQueue_stats, outMsg, NULL);
-    if (result != pdTRUE)
-        return -1;
-    dbgOutputLoc(DLOC_Q_SEND_STAT_SUCC);
-    Message("\r\nSSI");
-    return 0;
-}
-int sendToStatsQueue(unpackedMsg* outMsg){
-    dbgOutputLoc(DLOC_Q_SEND_STAT_START);
-    BaseType_t result = xQueueSendToBack(xQueue_stats, outMsg, portMAX_DELAY);
-    if (result != pdTRUE)
-        return -1;
-    dbgOutputLoc(DLOC_Q_SEND_STAT_SUCC);
-    Message("\r\nSS");
-    return 0;
-}
-
-
-int receiveFromStatsQueue(unpackedMsg* inMsg){
-    dbgOutputLoc(DLOC_Q_REC_STAT_START);
-    BaseType_t result = xQueueReceive(xQueue_stats, inMsg, portMAX_DELAY);
-    if (result != pdPASS)
-        return -1;
-    dbgOutputLoc(DLOC_Q_REC_STAT_SUCC);
-    Message("\r\nRS");
     return 0;
 }
 
