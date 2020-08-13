@@ -1,10 +1,12 @@
 #include "queues.h"
 
-QueueHandle_t xQueue_mqtt  = NULL;
-QueueHandle_t xQueue_gen   = NULL;
-QueueHandle_t xQueueTriggerRGBSwitch = NULL;
+
 
 int init_queue(){
+    xQueue_mqtt  = NULL;
+    xQueue_gen   = NULL;
+    xQueueTriggerRGBSwitch = NULL;
+
     xQueue_mqtt = xQueueCreate(QUEUESIZE, sizeof(mqttMsg));
     xQueue_gen = xQueueCreate(QUEUESIZE, sizeof(unpackedMsg));
     xQueueTriggerRGBSwitch = xQueueCreate(QUEUESIZE, sizeof(msgTriggerRGBSwitch));

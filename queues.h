@@ -33,6 +33,10 @@ typedef struct {
 typedef struct {
 } msgTriggerRGBSwitch;
 
+QueueHandle_t xQueue_mqtt;
+QueueHandle_t xQueue_gen;
+QueueHandle_t xQueueTriggerRGBSwitch;
+
 int init_queue();
 
 int sendToMqttQueueIsr(mqttMsg*);

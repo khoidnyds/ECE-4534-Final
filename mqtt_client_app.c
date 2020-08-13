@@ -59,6 +59,16 @@ void mainThread(void * args){
 
     while(1){
 
+        if(uxQueueMessagesWaiting(xQueue_gen)==QUEUESIZE-3){
+            Message("Start Timer");
+            Timer_stop(timerUS);
+        }
+        if(uxQueueMessagesWaiting(xQueue_gen)==3){
+            Message("Stop Timer");
+            Timer_start(timerUS);
+        }
+
+
         receiveFromMqttQueue(&recMsg);
 
 
