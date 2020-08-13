@@ -76,6 +76,11 @@ void getTime(uint_least8_t index){
             distance = speed * (end-start) / 8 * 10 * 1.3; //80MHz and 2*distance
         else
             distance = speed * (Timer_US_PERIOD_IN_US - start  + end) / 8 * 10;
+
+        if (distance>3500 || distance <30){
+            return;
+        }
+
         unpackedMsg outMsg;
         switch(index){
             case US_FRONT_ECHO:
