@@ -36,8 +36,7 @@ void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
     else{
         strcpy(outMsg.payload, "no");
     }
-    outMsg.statsCmd = PUBLISHED;
-    outMsg.msgType = GENERAL;
+
     strcpy(outMsg.topic, PUB_TOPIC_SWITCH);
 
     int success = sendToGenQueueIsr(&outMsg);

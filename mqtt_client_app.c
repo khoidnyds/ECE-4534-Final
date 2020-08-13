@@ -1,7 +1,6 @@
 #include "mqtt_client_app.h"
 
-char* allTopics[ALL_TOPIC_COUNT] = {SUB_TOPIC_0, SUB_TOPIC_1, SUB_TOPIC_2, SUB_TOPIC_3,
-                                    PUB_TOPIC_US_FRONT, PUB_TOPIC_US_LEFT, PUB_TOPIC_US_RIGHT,
+char* allTopics[ALL_TOPIC_COUNT] = {PUB_TOPIC_US_FRONT, PUB_TOPIC_US_LEFT, PUB_TOPIC_US_RIGHT,
                                     PUB_TOPIC_RGB, PUB_TOPIC_SWITCH};
 
 void MQTT_EventCallback(int32_t event){
@@ -48,9 +47,7 @@ void mainThread(void * args){
     if(mqttClientHandle < 0)
         errorHalt("Error connecting");
 
-
     mqttMsg recMsg;
-    //unpackedMsg unpMsg;
 
     do{
         receiveFromMqttQueue(&recMsg);
@@ -68,15 +65,6 @@ void mainThread(void * args){
         if(recMsg.event == APP_MQTT_PUBLISH){
             MQTT_IF_Publish(mqttClientHandle, recMsg.topic, recMsg.payload, QOS);
         }
-        // Sensors never receive message
-//        else if(recMsg.event == APP_MQTT_RECEIVE){
-//            unpMsg.statsCmd=RECEIVED;
-//            strcpy(unpMsg.topic, recMsg.topic);
-//            json_unpack(&unpMsg, recMsg.payload);
-//            if(strcmp(recMsg.topic, SUB_TOPIC_3)==0)
-//                sendToGenQueue(&unpMsg);
-//            sendToStatsQueue(&unpMsg);
-//        }
     }
 }
 

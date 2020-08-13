@@ -44,30 +44,14 @@ int json_pack(unpackedMsg* unpacked, char* outStr){
     dbgOutputLoc(DLOC_J_PACK_START);
 
     // {"ts":4530.40, "sn":22639, "pload":"payload string"}
-    if(unpacked->msgType==GENERAL){
-        strcat(outStr, "{\"ts\":");
-        doubleToStr(unpacked->timestamp, outStr+strlen(outStr), 2);
-        strcat(outStr, ", \"sn\":");
-        intToString(unpacked->sequenceNum, outStr+strlen(outStr));
-        strcat(outStr, ", \"pload\":\"");
-        strcat(outStr, unpacked->payload);
-        strcat(outStr, "\"}");
-    }
-    //{"topic":"/team3/b2/out", "#pub":0, "#rec":120, "#drop":1}
-    else if(unpacked->msgType==STATS){
-        strcat(outStr, "{\"topic\":\"");
-        strcat(outStr, unpacked->topic);
-        strcat(outStr, "\", \"#pub\":");
-        intToString(unpacked->numPub, outStr+strlen(outStr));
-        strcat(outStr, ", \"#rec\":");
-        intToString(unpacked->numRec, outStr+strlen(outStr));
-        strcat(outStr, ", \"#drop\":");
-        intToString(unpacked->numDrop, outStr+strlen(outStr));
-        strcat(outStr, "}");
-    }
-    else{
-        return -1;
-    }
+    strcat(outStr, "{\"ts\":");
+    doubleToStr(unpacked->timestamp, outStr+strlen(outStr), 2);
+    strcat(outStr, ", \"sn\":");
+    intToString(unpacked->sequenceNum, outStr+strlen(outStr));
+    strcat(outStr, ", \"pload\":\"");
+    strcat(outStr, unpacked->payload);
+    strcat(outStr, "\"}");
+
     dbgOutputLoc(DLOC_J_PACK_FINISH);
     return 0;
 }

@@ -80,12 +80,15 @@ void getTime(uint_least8_t index){
         switch(index){
             case US_FRONT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_FRONT);
+                Message("\r\nFront");
                 break;
             case US_LEFT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_LEFT);
+                Message("\r\nLeft");
                 break;
             case US_RIGHT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_RIGHT);
+                Message("\r\nRight");
                 break;
             default:
                 break;
@@ -97,8 +100,6 @@ void getTime(uint_least8_t index){
         strcpy(outMsg.payload, buffer);
         dbgOutputLoc(DLOC_GT_MAKEMSG_PAYLOAD);
 
-        outMsg.statsCmd = PUBLISHED;
-        outMsg.msgType = GENERAL;
 
         int success = sendToGenQueueIsr(&outMsg);
         if(success==FAIL){

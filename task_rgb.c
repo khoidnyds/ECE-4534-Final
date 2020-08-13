@@ -116,25 +116,6 @@ void* rgbTask(void *arg0){
     while(1){
         msgTriggerRGBSwitch newTriggerRGBSwitch;
         if(!receiveMsgFromQueueTriggerRGBSwitch(&newTriggerRGBSwitch)){
-//            //Send msgSwitch to queue
-//            unpackedMsg outMsg;
-//
-//            if(GPIO_read(LIMIT_SWITCH)==0){
-//                strcpy(outMsg.payload, "yes");
-//            }
-//            else{
-//                strcpy(outMsg.payload, "no");
-//            }
-//            outMsg.statsCmd = PUBLISHED;
-//            outMsg.msgType = GENERAL;
-//            strcpy(outMsg.topic, PUB_TOPIC_SWITCH);
-//
-//            int success = sendToGenQueue(&outMsg);
-//            if(success){
-//                Message("\r\nSend Switch message failed");
-//                while(1);
-//            }
-
 
             transmit_size = 1;
             for(i=0;i<transmit_size;i++){
@@ -225,7 +206,6 @@ void i2cCallback(I2C_Handle i2c, I2C_Transaction* i2cTransaction, bool success){
                 strcpy(outMsg.payload, "unknown");
             }
             strcpy(outMsg.topic, PUB_TOPIC_RGB);
-            outMsg.msgType = GENERAL;
 
             int success = sendToGenQueueIsr(&outMsg);
             if(success){
