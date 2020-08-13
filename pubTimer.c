@@ -70,12 +70,12 @@ void getTime(uint_least8_t index){
         currentInt = START;
         end = Timer_getCount(timerUS);
 
-        double speed = (331 + 0.6 * AMBIENT_TEMP) / 1000;
+        double speed = (331 + 0.6 * AMBIENT_TEMP) / 1000; // mm/us
         unsigned int distance;
         if(end>start)
-            distance = speed * (end-start) / 16 * 10; //80MHz and 2*distance
+            distance = speed * (end-start) / 8 * 10 * 1.3; //80MHz and 2*distance
         else
-            distance = speed * (start-end) / 16 * 10;
+            distance = speed * (Timer_US_PERIOD_IN_US - start  + end) / 8 * 10;
         unpackedMsg outMsg;
         switch(index){
             case US_FRONT_ECHO:
@@ -98,11 +98,24 @@ void getTime(uint_least8_t index){
         dbgOutputLoc(DLOC_GT_MAKEMSG_PAYLOAD);
 
 
-        int success = sendToGenQueueIsr(&outMsg);
-        if(success==FAIL){
-            Message("\r\nSend US message failed");
-            while(1);
-        }
+//        int success = sendToGenQueueIsr(&outMsg);
+//        if(success==FAIL){
+//            Message("\r\nSend US message failed");
+//            while(1);
+//        }
+
+
+
+        mqttMsg sendMsg;
+        sendMsg.event = APP_MQTT_PUBLISH;
+        strcpy(sendMsg.topic, outMsg.topic);
+        outMsg.timestamp=1;
+        outMsg.sequenceNum=1;
+        strcpy(sendMsg.payload, "[");
+        json_pack(&outMsg, sendMsg.payload);
+        strcat(sendMsg.payload, "]");
+
+        sendToMqttQueueIsr(&sendMsg);
 
         start=0;
         end=0;

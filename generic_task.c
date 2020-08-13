@@ -42,6 +42,7 @@ void* genTask(void* args){
             outMsg.sequenceNum=seqNum_rgb;
             seqNum_rgb++;
         }
+
         dbgOutputLoc(DLOC_GT_MAKEMSG_SN);
 
         strcpy(sendMsg.payload, "[");
@@ -49,6 +50,8 @@ void* genTask(void* args){
         dbgOutputLoc(DLOC_GT_MSG_PACKED);
         strcat(sendMsg.payload, "]");
         dbgOutputLoc(DLOC_GT_MAKEMSG_FINISH);
+
+        //strcpy(sendMsg.payload, outMsg.payload);
         strcpy(sendMsg.topic, outMsg.topic);
 
         sendToMqttQueue(&sendMsg);

@@ -137,7 +137,6 @@ extern int32_t ti_net_SlNet_initConfig();
 
 #define ALL_TOPIC_COUNT          (NUM_SUB_TOPICS + NUM_PUB_TOPICS)
 
-
 extern char* allTopics[ALL_TOPIC_COUNT];
 
 #endif /* MQTT_CLIENT_APP_H_ */
