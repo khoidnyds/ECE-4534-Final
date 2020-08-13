@@ -6,7 +6,10 @@
 #include "mqtt_client_app.h"
 
 #define Timer_RGB_PERIOD_IN_US  1000000
-#define LOW                     0
+#define LOW      0
+
+
+int seqNum_switch;
 
 void initTimerRGB();
 void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status);

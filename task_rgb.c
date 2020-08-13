@@ -112,6 +112,7 @@ void* rgbTask(void *arg0){
         break;
     }
 
+    seqNum_rgb = 0;
 
     while(1){
         msgTriggerRGBSwitch newTriggerRGBSwitch;
@@ -216,11 +217,12 @@ void i2cCallback(I2C_Handle i2c, I2C_Transaction* i2cTransaction, bool success){
             mqttMsg sendMsg;
             sendMsg.event = APP_MQTT_PUBLISH;
             strcpy(sendMsg.topic, outMsg.topic);
-            outMsg.timestamp=1;
-            outMsg.sequenceNum=1;
+            outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
+            outMsg.sequenceNum=seqNum_rgb;
             strcpy(sendMsg.payload, "[");
             json_pack(&outMsg, sendMsg.payload);
             strcat(sendMsg.payload, "]");
+            seqNum_rgb++;
 
             sendToMqttQueueIsr(&sendMsg);
 

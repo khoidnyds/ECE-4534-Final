@@ -95,6 +95,7 @@ tcs34725Gain_t gain;
 typedef enum {STATE_CLEAR, STATE_RED, STATE_GREEN, STATE_BLUE} state_rgb;
 state_rgb stateRGB;
 uint16_t clearRaw, redRaw, greenRaw, blueRaw;
+int seqNum_rgb;
 
 void* rgbTask(void *arg0);
 void i2cCallback(I2C_Handle i2c, I2C_Transaction* i2cTransaction, bool success);

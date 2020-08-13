@@ -48,11 +48,6 @@ void mainThread(void * args){
         errorHalt("Error connecting");
 
     mqttMsg recMsg;
-    int seqNum_us1 = 0;
-    int seqNum_us2 = 0;
-    int seqNum_us3 = 0;
-    int seqNum_switch = 0;
-    int seqNum_rgb = 0;
 
     do{
         receiveFromMqttQueue(&recMsg);

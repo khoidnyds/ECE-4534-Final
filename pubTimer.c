@@ -26,6 +26,10 @@ void initTimerUS()
     if (Timer_start(timerUS) == Timer_STATUS_ERROR) {
         while(1);
     }
+
+    seqNum_us1 = 0;
+    seqNum_us2 = 0;
+    seqNum_us3 = 0;
 }
 
 void usTrigger(Timer_Handle handle, int_fast16_t status){
@@ -85,12 +89,18 @@ void getTime(uint_least8_t index){
         switch(index){
             case US_FRONT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_FRONT);
+                seqNum_us1++;
+                outMsg.sequenceNum=seqNum_us1;
                 break;
             case US_LEFT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_LEFT);
+                seqNum_us2++;
+                outMsg.sequenceNum=seqNum_us2;
                 break;
             case US_RIGHT_ECHO:
                 strcpy(outMsg.topic, PUB_TOPIC_US_RIGHT);
+                seqNum_us3++;
+                outMsg.sequenceNum=seqNum_us3;
                 break;
             default:
                 break;
@@ -112,8 +122,7 @@ void getTime(uint_least8_t index){
         mqttMsg sendMsg;
         sendMsg.event = APP_MQTT_PUBLISH;
         strcpy(sendMsg.topic, outMsg.topic);
-        outMsg.timestamp=1;
-        outMsg.sequenceNum=1;
+        outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
         strcpy(sendMsg.payload, "[");
         json_pack(&outMsg, sendMsg.payload);
         strcat(sendMsg.payload, "]");

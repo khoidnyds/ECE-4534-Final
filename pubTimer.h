@@ -23,6 +23,10 @@ state currentState;
 typedef enum {START, END} GPIO_int;
 GPIO_int currentInt;
 
+int seqNum_us1;
+int seqNum_us2;
+int seqNum_us3;
+
 
 void initTimerUS();
 void usTrigger(Timer_Handle handle, int_fast16_t status);

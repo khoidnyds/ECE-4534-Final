@@ -3,6 +3,11 @@
 void* genTask(void* args){
 
     dbgOutputLoc(DLOC_GT_START);
+    int seqNum_us1;
+    int seqNum_us2;
+    int seqNum_us3;
+    int seqNum_switch;
+    int seqNum_rgb;
 
     while(1){
         unpackedMsg outMsg;

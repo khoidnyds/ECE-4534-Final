@@ -20,6 +20,7 @@ void initTimerRGB()
     if (Timer_start(timerRGB) == Timer_STATUS_ERROR) {
         errorHalt("Timer RGB start failed");
     }
+    seqNum_switch=0;
     return;
 }
 
@@ -48,11 +49,12 @@ void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
     mqttMsg sendMsg;
     sendMsg.event = APP_MQTT_PUBLISH;
     strcpy(sendMsg.topic, outMsg.topic);
-    outMsg.timestamp=1;
-    outMsg.sequenceNum=1;
+    outMsg.timestamp=(portTICK_PERIOD_MS*xTaskGetTickCount())/1000.0;
+    outMsg.sequenceNum=seqNum_switch;
     strcpy(sendMsg.payload, "[");
     json_pack(&outMsg, sendMsg.payload);
     strcat(sendMsg.payload, "]");
+    seqNum_switch++;
 
     sendToMqttQueueIsr(&sendMsg);
 }
