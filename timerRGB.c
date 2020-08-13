@@ -39,11 +39,22 @@ void timerRGBCallback(Timer_Handle myHandle, int_fast16_t status)
 
     strcpy(outMsg.topic, PUB_TOPIC_SWITCH);
 
-    int success = sendToGenQueueIsr(&outMsg);
-    if(success){
-        Message("\r\nSend Switch message failed");
-        while(1);
-    }
+//    int success = sendToGenQueueIsr(&outMsg);
+//    if(success){
+//        Message("\r\nSend Switch message failed");
+//        while(1);
+//    }
+
+    mqttMsg sendMsg;
+    sendMsg.event = APP_MQTT_PUBLISH;
+    strcpy(sendMsg.topic, outMsg.topic);
+    outMsg.timestamp=1;
+    outMsg.sequenceNum=1;
+    strcpy(sendMsg.payload, "[");
+    json_pack(&outMsg, sendMsg.payload);
+    strcat(sendMsg.payload, "]");
+
+    sendToMqttQueueIsr(&sendMsg);
 }
 
 

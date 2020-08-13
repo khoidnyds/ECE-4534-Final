@@ -109,8 +109,6 @@ void getTime(uint_least8_t index){
 //            while(1);
 //        }
 
-
-
         mqttMsg sendMsg;
         sendMsg.event = APP_MQTT_PUBLISH;
         strcpy(sendMsg.topic, outMsg.topic);

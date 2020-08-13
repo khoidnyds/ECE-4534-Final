@@ -207,11 +207,22 @@ void i2cCallback(I2C_Handle i2c, I2C_Transaction* i2cTransaction, bool success){
             }
             strcpy(outMsg.topic, PUB_TOPIC_RGB);
 
-            int success = sendToGenQueueIsr(&outMsg);
-            if(success){
-                Message("\r\nSend RGB message failed");
-                while(1);
-            }
+//            int success = sendToGenQueueIsr(&outMsg);
+//            if(success){
+//                Message("\r\nSend RGB message failed");
+//                while(1);
+//            }
+
+            mqttMsg sendMsg;
+            sendMsg.event = APP_MQTT_PUBLISH;
+            strcpy(sendMsg.topic, outMsg.topic);
+            outMsg.timestamp=1;
+            outMsg.sequenceNum=1;
+            strcpy(sendMsg.payload, "[");
+            json_pack(&outMsg, sendMsg.payload);
+            strcat(sendMsg.payload, "]");
+
+            sendToMqttQueueIsr(&sendMsg);
 
             break;
         }
